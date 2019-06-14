@@ -7,6 +7,7 @@ import com.hazelcast.core.IdGenerator;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * A class to model a Hazelcast member (called a node) that populates a
@@ -17,7 +18,7 @@ import java.util.Map;
 public class Producer {
 
     // Properties
-    private Map<Long, Object> map; // map is now holding Objects instead of Strings
+    private Map<Object, Object> map;
     private IdGenerator idGenerator; // use Hazelcast ID generator to ensure uniqueness
 
     /**
@@ -30,6 +31,20 @@ public class Producer {
         HazelcastInstance hz = Hazelcast.newHazelcastInstance();
         map = hz.getMap(mapName);
         idGenerator = hz.getIdGenerator("newid");
+    }
+
+    /**
+     * A method for the cluster.Producer to insert certain key and attribute values into the distributed Hazelcast map.
+     * @param keys Key attributes to insert
+     * @param attributes Other attributes to insert
+     * Note: The method can be changed later to do any other data pre-processing task
+     */
+    public void produce(List<Object> keys, List<Object> attributes) {
+        List<Object[]> pairs = keys.stream()
+                .flatMap(i -> attributes.stream()
+                        .map(j -> new Object[]{i, j}))
+                .collect(Collectors.toList());
+        pairs.forEach(p ->  map.put(p[0], p[1]));
     }
 
     /**

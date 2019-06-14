@@ -17,7 +17,7 @@ import java.util.Map;
 public class Consumer {
 
     // Propertie(s)
-    private Map<Long, Object> map;
+    private Map<Object, Object> map;
 
     /**
      * Constructor of the cluster.Consumer class, which configures the Hazelcast client.
@@ -40,7 +40,7 @@ public class Consumer {
      * Note: The method can be changed later to do any other data post-processing task
      */
     public void consume() {
-        map.forEach((k, v) -> System.out.println(v));
+        map.forEach((k, v) -> System.out.println(k + " " + v));
     }
 
     /**
