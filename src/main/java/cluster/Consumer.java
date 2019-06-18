@@ -7,6 +7,7 @@ import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.core.IMap;
 import com.hazelcast.query.Predicate;
 
+import java.util.Collection;
 import java.util.Map;
 
 /**
@@ -44,13 +45,12 @@ public class Consumer {
     }
 
     /**
-     * A method for the cluster.Consumer to read the values in the distributed Hazelcast map
-     * after selecting them according to a specified predicate. In other words, the
-     * method performs a select query followed by printing of the selected values.
+     * A method for the cluster.Consumer to read and return the values in the distributed Hazelcast map
+     * after selecting them according to a specified predicate.
      * @param p The predicate appearing on the where part of the select query
+     * @return The values filtered after the selection
      */
-    public void consume(Predicate p) {
-        Iterable<?> result = ((IMap) map).values(p);
-        result.forEach(System.out::println);
+    public Collection consume(Predicate p) {
+        return ((IMap) map).values(p);
     }
 }

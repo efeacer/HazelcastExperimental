@@ -1,4 +1,4 @@
-import tableIO.LivingAreaTableReader;
+import tableIO.LogTableReader;
 import tableIO.TableReader;
 
 import java.io.IOException;
@@ -14,7 +14,7 @@ public class TableReaderTest {
     public static void main(String[] args) {
         List<Object> tableContents;
         try {
-            TableReader tr = new LivingAreaTableReader("C:\\Users\\StjEfeA\\Desktop\\lbf_liv_area.xls");
+            TableReader tr = new LogTableReader("C:\\Users\\StjEfeA\\Desktop\\lbf_log.xlsx");
             tableContents = tr.read();
             tableContents.forEach((System.out::println));
         } catch (IOException e) {

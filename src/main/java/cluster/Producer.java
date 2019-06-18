@@ -5,9 +5,9 @@ import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.core.IMap;
 import com.hazelcast.core.IdGenerator;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
  * A class to model a Hazelcast member (called a node) that populates a
@@ -40,11 +40,12 @@ public class Producer {
      * Note: The method can be changed later to do any other data pre-processing task
      */
     public void produce(List<Object> keys, List<Object> attributes) {
-        List<Object[]> pairs = keys.stream()
-                .flatMap(i -> attributes.stream()
-                        .map(j -> new Object[]{i, j}))
-                .collect(Collectors.toList());
-        pairs.forEach(p ->  map.put(p[0], p[1]));
+        List<Object[]> pairs = new ArrayList<>();
+        int numPairs = keys.size();
+        for (int i = 0; i < numPairs; i++) {
+            pairs.add(new Object[]{keys.get(i), attributes.get(i)});
+        }
+        pairs.forEach(p -> map.put(p[0], p[1]));
     }
 
     /**

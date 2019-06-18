@@ -1,8 +1,7 @@
 package tableIO;
 
-import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.poifs.filesystem.POIFSFileSystem;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
@@ -18,7 +17,7 @@ import java.util.List;
 public abstract class TableReader {
 
     // Properties
-    HSSFSheet sheet;
+    XSSFSheet sheet;
 
     /**
      * Constructor of the TableReader class, initializes some necessary objects.
@@ -28,8 +27,7 @@ public abstract class TableReader {
     TableReader(String tableName) throws IOException {
         // Properties
         InputStream in = new BufferedInputStream(new FileInputStream(tableName));
-        POIFSFileSystem fs = new POIFSFileSystem(in);
-        HSSFWorkbook wb = new HSSFWorkbook(fs);
+        XSSFWorkbook wb = new XSSFWorkbook(in);
         sheet = wb.getSheetAt(0);
     }
 
