@@ -40,9 +40,7 @@ public class Consumer {
      * Hazelcast map it is initialized with.
      * Note: The method can be changed later to do any other data post-processing task
      */
-    public void consume() {
-        map.forEach((k, v) -> System.out.println(k + " " + v));
-    }
+    public void consume() { map.forEach((k, v) -> System.out.println(k + " " + v)); }
 
     /**
      * A method for the cluster.Consumer to read and return the values in the distributed Hazelcast map
@@ -50,7 +48,5 @@ public class Consumer {
      * @param p The predicate appearing on the where part of the select query
      * @return The values filtered after the selection
      */
-    public Collection consume(Predicate p) {
-        return ((IMap) map).values(p);
-    }
+    public Collection consume(Predicate p) { return ((IMap) map).values(p); }
 }

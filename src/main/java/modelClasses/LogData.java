@@ -18,7 +18,7 @@ public class LogData implements Serializable {
         double longitudeNumber; // LONGITUDE_NUM
         int customerID; // IP_ID_OUT
 
-        public Key(int timeOfDay, int weekDay, double latitudeNumber, double longitudeNumber, int customerID) {
+        Key(int timeOfDay, int weekDay, double latitudeNumber, double longitudeNumber, int customerID) {
             this.timeOfDay = timeOfDay;
             this.weekDay = weekDay;
             this.latitudeNumber = latitudeNumber;

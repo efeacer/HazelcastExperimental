@@ -45,7 +45,7 @@ public class Producer {
         for (int i = 0; i < numPairs; i++) {
             pairs.add(new Object[]{keys.get(i), attributes.get(i)});
         }
-        pairs.forEach(p -> map.put(p[0], p[1]));
+        pairs.forEach(p -> map.putIfAbsent(p[0], p[1])); // putIfAbsent is a better choice
     }
 
     /**
@@ -53,10 +53,7 @@ public class Producer {
      * @param entries The entries which will be inserted into the distributed Hazelcast map
      * Note: The method can be changed later to do any other data pre-processing task
      */
-    public void produce(List<Object> entries) {
-        // Use Hazelcast's ID generator to ensure uniqueness
-        entries.forEach(e -> map.put(idGenerator.newId(), e));
-    }
+    public void produce(List<Object> entries) { entries.forEach(e -> map.put(idGenerator.newId(), e)); }
 
     /**
      * A method for the Producer to be able to index the distributed Hazelcast map for
@@ -66,7 +63,5 @@ public class Producer {
      *                is the attribute name and Boolean represents whether the index is an
      *                ordered one or not
      */
-    public void indexMap(Map<String, Boolean> indices) {
-        indices.forEach((k, v) -> ((IMap) map).addIndex(k, v));
-    }
+    public void indexMap(Map<String, Boolean> indices) { indices.forEach((k, v) -> ((IMap) map).addIndex(k, v)); }
 }
